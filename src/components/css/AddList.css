@@ -1,0 +1,34 @@
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  background-color: #276ffd;
+}
+
+form {
+  display: flex;
+  gap: 5px;
+}
+
+.user-text-input {
+  padding: 5px;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  font-weight: 700;
+}
+
+.add-btn {
+  background-color: #fdb427;
+  color: white;
+  font-weight: 700;
+  border-radius: 5px;
+  font-size: 1.5rem;
+  padding: 5px;
+  border: none;
+}
+
+.form-title {
+  color: rgb(252, 252, 252);
+}

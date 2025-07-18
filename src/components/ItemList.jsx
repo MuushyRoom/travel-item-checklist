@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "../components/css/ItemList.css";
-function ItemList({ items, onHandleDelete, onHandlePacked }) {
+function ItemList({ items, onHandleDelete, onHandlePacked,onHandleClearList }) {
   let [sortBy, setSortBy] = useState("order-sort");
   let [sortedItem, setSortedItem] = useState([]);
 
@@ -65,6 +65,7 @@ function ItemList({ items, onHandleDelete, onHandlePacked }) {
         <option value="desc-sort">Sort by Description</option>
         <option value="packed-sort">Sort by packed</option>
       </select>
+      <button onClick={onHandleClearList} className="clear-btn">Clear List</button>
 </section>
       
     </main>

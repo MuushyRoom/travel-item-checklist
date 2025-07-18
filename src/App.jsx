@@ -3,29 +3,15 @@ import Header from "./components/Header";
 import AddList from "./components/AddItem";
 import ItemList from "./components/ItemList";
 import Footer from "./components/Footer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-// const testData=[
-//   {
-//     id: 1,
-//     itemName : "ToothBrush",
-//     isPacked : false
-//   },{
-//       id: 2,
-//     itemName : "Bag",
-//     isPacked : false
-//   },{
-//      id: 3,
-//     itemName : "Brain",
-//     isPacked : true
-//   }
-// ]
+const getList = localStorage.getItem("checklist");
+const retrievedList = JSON.parse(getList || "[]");
 
 function App() {
-  let [itemList, setItemList] = useState([]);
+  let [itemList, setItemList] = useState(retrievedList);
 
   function handleNewItem(userInput) {
-    
     const newItem = {
       id: itemList.length + 1,
       itemName: userInput,
@@ -35,29 +21,44 @@ function App() {
   }
 
   function handleDelete(selectedId) {
-    
     setItemList(itemList.filter((item) => item.id !== selectedId));
   }
 
-  function handlePacked(selectedId) {
-
-  if(itemList[selectedId-1].isPacked === true){
-       setItemList((prevItems) =>itemList.map((item) =>item.id === selectedId ? { ...item, isPacked: false } : item));
-    }else if(itemList[selectedId-1].isPacked === false){
-      setItemList((prevItems) =>itemList.map((item) =>item.id === selectedId ? { ...item, isPacked: true } : item));
-    }
-  
-   
-   
+  function handleClearList() {
+    setItemList([]);
+    localStorage.clear();
   }
 
- 
+  function handlePacked(selectedId) {
+    // console.log(itemList[selectedId - 1].isPacked);
+    // console.log(itemList[selectedId - 1]);
+    if (itemList[selectedId - 1].isPacked == true) {
+      setItemList((prevItems) =>
+        itemList.map((item) =>
+          item.id === selectedId ? { ...item, isPacked: false } : item
+        )
+      );
+    } else if (itemList[selectedId - 1].isPacked == false) {
+      setItemList((prevItems) =>
+        itemList.map((item) =>
+          item.id === selectedId ? { ...item, isPacked: true } : item
+        )
+      );
+    }
+  }
+
+  useEffect(() => {
+    localStorage.setItem("checklist", JSON.stringify(itemList));
+    console.log(itemList);
+  }, [itemList]);
+
   return (
     <div className="content-container">
       <Header />
       <AddList onHandleNewItem={handleNewItem} />
       <ItemList
         items={itemList}
+        onHandleClearList={handleClearList}
         onHandlePacked={handlePacked}
         onHandleDelete={handleDelete}
       />
